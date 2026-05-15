@@ -31,11 +31,19 @@ jobs:
 
       - name: Install Geode CLI
         run: |
-          wget -q https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux.zip || \
-          wget -q $(curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest | grep browser_download_url | grep linux | head -1 | cut -d'"' -f4)
-          unzip -q *.zip
-          sudo mv geode /usr/local/bin/geode || true
+          CLI_URL=$(curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest \
+            | grep browser_download_url \
+            | grep -i linux \
+            | grep -v aarch64 \
+            | head -1 \
+            | cut -d'"' -f4)
+          echo "Downloading CLI from: $CLI_URL"
+          wget -q "$CLI_URL" -O geode-cli.zip
+          unzip -q geode-cli.zip
+          CLI_BIN=$(find . -maxdepth 1 -name "geode*" -type f | head -1)
+          sudo mv "$CLI_BIN" /usr/local/bin/geode
           sudo chmod +x /usr/local/bin/geode
+          geode --version
 
       - name: Configure CMake
         run: |
