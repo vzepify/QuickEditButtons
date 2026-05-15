@@ -38,6 +38,11 @@ jobs:
           sudo chmod +x /usr/local/bin/geode
           geode --version
 
+      - name: Install Geode prebuilt binaries
+        run: |
+          cd geode-sdk
+          geode sdk install-binaries --platform android64
+
       - name: Configure CMake
         run: |
           cmake -B build-android \
