@@ -1,0 +1,13 @@
+{
+	"geode": "4.0.0",
+	"gd": {
+		"android": "2.2074"
+	},
+	"id": "user.quickeditbuttons",
+	"name": "Quick Edit Buttons",
+	"version": "v1.0.0",
+	"developer": "user",
+	"description": "Adds Flip X, Flip Y, Rotate CW, and Rotate CCW buttons to the first page of the Edit tab in the Level Editor for quick access.",
+	"tags": ["editor", "enhancement", "gameplay"],
+	"links": {}
+}
