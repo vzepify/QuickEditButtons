@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y cmake ninja-build unzip wget
+          sudo apt install -y cmake ninja-build unzip wget cargo rustc pkg-config libssl-dev
 
       - name: Download Android NDK
         run: |
@@ -31,17 +31,10 @@ jobs:
 
       - name: Install Geode CLI
         run: |
-          CLI_URL=$(curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest \
-            | grep browser_download_url \
-            | grep -i linux \
-            | grep -v aarch64 \
-            | head -1 \
-            | cut -d'"' -f4)
-          echo "Downloading CLI from: $CLI_URL"
-          wget -q "$CLI_URL" -O geode-cli.zip
-          unzip -q geode-cli.zip
-          CLI_BIN=$(find . -maxdepth 1 -name "geode*" -type f | head -1)
-          sudo mv "$CLI_BIN" /usr/local/bin/geode
+          git clone --depth 1 https://github.com/geode-sdk/cli.git geode-cli-src
+          cd geode-cli-src
+          cargo build --release
+          sudo cp target/release/geode /usr/local/bin/geode
           sudo chmod +x /usr/local/bin/geode
           geode --version
 
