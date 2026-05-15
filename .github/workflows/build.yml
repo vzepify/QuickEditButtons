@@ -38,7 +38,7 @@ jobs:
           sudo chmod +x /usr/local/bin/geode
           geode --version
 
-      s - name: Install Geode prebuilt binaries
+      - name: Install Geode prebuilt binaries
         run: |
           geode config setup --work-dir $PWD/geode-sdk --install-dir $PWD/geode-sdk
           cd geode-sdk
