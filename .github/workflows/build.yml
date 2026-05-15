@@ -40,8 +40,9 @@ jobs:
 
       - name: Install Geode prebuilt binaries
         run: |
-          geode config setup --work-dir $PWD/geode-sdk --install-dir $PWD/geode-sdk
-          cd geode-sdk
+          mkdir -p ~/.local/share/geode-cli
+          geode config setup --no-configure
+          geode sdk set-path $PWD/geode-sdk
           geode sdk install-binaries --platform android64
 
       - name: Configure CMake
